@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agrex EDUCAR — Instituto Agrex</title>
+<style>
+:root{--g:#19513e;--g2:#2c7758;--bg:#f4f7f5;--line:#dfe8e3;--txt:#1d2b25;--mut:#68776f}
+*{box-sizing:border-box}body{margin:0;font:14px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--txt)}
+header{background:linear-gradient(120deg,#123d30,#267151);color:#fff;padding:20px max(18px,calc((100% - 1200px)/2));display:flex;justify-content:space-between;align-items:center}.brand{font-size:24px;font-weight:800}.brand small{display:block;font-size:12px;letter-spacing:1.5px;color:#d9eee4;margin-top:2px}.demo{border:1px solid #ffffff55;padding:7px 11px;border-radius:30px;font-size:12px}
+.shell{max-width:1200px;margin:20px auto;padding:0 16px;display:grid;grid-template-columns:215px 1fr;gap:18px}nav,.panel,.card{background:#fff;border:1px solid var(--line);border-radius:14px}nav{padding:10px;height:max-content;position:sticky;top:12px}nav button{width:100%;border:0;background:transparent;text-align:left;padding:11px;border-radius:9px;color:#506159;cursor:pointer}nav button.active,nav button:hover{background:#eaf4ee;color:var(--g);font-weight:700}
+.page{display:none}.page.active{display:block}.title{margin:0 0 16px}.title h1{font-size:23px;margin:0}.muted{color:var(--mut)}.notice{background:#fff7e8;border:1px solid #efddb9;color:#76551d;border-radius:10px;padding:10px 12px;margin-bottom:13px;font-size:12px}.panel{padding:17px;margin-bottom:14px}.panel h3{margin:0 0 13px}.panel h4{margin:18px 0 10px;color:var(--g);border-bottom:1px solid #edf2ef;padding-bottom:6px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}.full{grid-column:1/-1}label{display:block;font-size:12px;font-weight:700;color:#53645b;margin-bottom:5px}input,select,textarea{width:100%;padding:10px;border:1px solid #d5dfda;border-radius:8px;font:inherit;background:#fff}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.btn{border:0;border-radius:9px;padding:9px 13px;background:var(--g2);color:#fff;font-weight:700;cursor:pointer}.btn.alt{background:#edf4f0;color:var(--g);border:1px solid #d9e5df}.btn.sm{padding:6px 9px;font-size:11px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:14px}.card{padding:15px}.metric{font-size:26px;font-weight:800;margin-top:5px}.tag{display:inline-block;padding:4px 8px;border-radius:20px;background:#eaf4ee;color:#226145;font-size:11px}.warn{background:#fff0dd;color:#915c12}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #edf1ef;font-size:12px}th{color:#65756c;background:#fafcfb}.scroll{overflow:auto}.entry{padding:11px 0;border-bottom:1px solid #edf1ef}.entry:last-child{border:0}.barrow{display:grid;grid-template-columns:150px 1fr 45px;gap:10px;align-items:center;margin:10px 0}.track{height:8px;background:#edf1ef;border-radius:9px;overflow:hidden}.fill{height:100%;background:#438a69}.hidden{display:none!important}footer{text-align:center;color:#77867e;font-size:11px;padding:20px}
+@media(max-width:800px){.shell{display:block;margin-top:12px}nav{position:static;display:flex;overflow:auto;margin-bottom:13px}nav button{width:auto;white-space:nowrap}.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.full{grid-column:auto}.barrow{grid-template-columns:100px 1fr 40px}}
+</style><style>#authGate{position:fixed;inset:0;background:#eef5f0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:18px}#authGate .panel{max-width:430px;width:100%;box-shadow:0 10px 45px #123d3022}#authGate h2{color:#19513e}#authGate input{margin-bottom:12px}#authError{color:#a12d2d;white-space:pre-wrap}#syncStatus{font-size:12px;color:#d9eee4}body.locked .shell,body.locked footer{visibility:hidden}</style></head><body class="locked"><div id="authGate"><div class="panel"><h2>AGREX EDUCAR</h2><p>Instituto Agrex — Ambiente de homologação</p><p class="muted">Acesso individual autorizado. Use apenas dados fictícios.</p><form id="loginForm"><label>E-mail</label><input type="email" id="loginEmail" required autocomplete="username"><label>Senha</label><input type="password" id="loginPassword" required autocomplete="current-password"><button class="btn" type="submit">Entrar</button></form><p id="authError"></p></div></div>
+<header><div class="brand">AGREX EDUCAR<small>INSTITUTO AGREX</small></div><div class="demo">Homologação • Banco compartilhado <button class="btn alt sm" id="logoutBtn" type="button">Sair</button><div id="syncStatus"></div></div></header>
+<div class="shell"><nav>
+<button class="active" data-p="dash">▦ Visão geral</button><button data-p="alunos">♙ Alunos</button><button data-p="freq">✓ Frequência</button><button data-p="notas">▤ Notas</button><button data-p="alicerce">↗ Rendimento Alicerce</button><button data-p="acom">♡ Acompanhamento</button><button data-p="nps">☷ Pesquisas / NPS</button><button data-p="rel">▥ Relatórios</button>
+</nav><main>
+<div class="notice">Versão de homologação com banco compartilhado. Use somente dados fictícios. Não insira dados reais de alunos, NIS ou informações de saúde até autorização formal da Agrex.</div>
+
+<section id="dash" class="page active"><div class="title"><h1>Visão geral</h1><span class="muted">Indicadores do protótipo</span></div>
+<div class="cards"><div class="card">Alunos<div class="metric" id="mAlunos">0</div></div><div class="card">Frequência média<div class="metric" id="mFreq">—</div></div><div class="card">Média das notas<div class="metric" id="mNota">—</div></div><div class="card">Pesquisas NPS<div class="metric" id="mNps">0</div></div></div>
+<div class="panel"><h3>Frequência por aluno</h3><div id="chart" class="muted">Cadastre alunos e frequências.</div></div></section>
+
+<section id="alunos" class="page"><div class="title"><h1>Cadastro de alunos</h1><span class="muted">Ficha de matrícula e informações socioeconômicas</span></div>
+<div class="panel"><form id="fAluno"><h4>Dados do aluno</h4><div class="grid">
+<div><label>Nome completo *</label><input id="aNome" required></div><div><label>Curso / turma *</label><input id="aTurma" required></div>
+<div><label>Turno *</label><select id="aTurno" required><option value="">Selecione</option><option>Matutino</option><option>Vespertino</option></select></div>
+<div><label>Data de nascimento</label><input id="aNasc" type="date"></div><div><label>Idade</label><input id="aIdade" readonly></div>
+<div><label>Naturalidade</label><input id="aNatural"></div><div><label>Gênero</label><select id="aGenero"><option value="">Selecione</option><option>Feminino</option><option>Masculino</option><option>Prefere não informar</option></select></div></div>
+<h4>Filiação e responsável</h4><div class="grid"><div><label>Nome do pai</label><input id="aPai"></div><div><label>Nome da mãe</label><input id="aMae"></div><div><label>Responsável pelo aluno</label><input id="aResp"></div><div><label>Telefone de contato</label><input id="aTel"></div><div><label>Profissão</label><input id="aProf"></div><div><label>Local de trabalho</label><input id="aTrab"></div><div class="full"><label>Endereço residencial</label><input id="aEnd"></div></div>
+<h4>Informações socioeconômicas</h4><div class="grid"><div><label>Quantidade de pessoas na mesma residência</label><input id="aMoradores" type="number" min="1"></div><div><label>Situação da moradia</label><select id="aMoradia"><option value="">Selecione</option><option>Própria</option><option>Alugada</option><option>Cedida</option></select></div><div><label>Renda familiar</label><select id="aRenda"><option value="">Selecione</option><option>Até R$ 1.000,00</option><option>R$ 1.000,01 - R$ 2.000,00</option><option>R$ 2.000,01 - R$ 3.000,00</option><option>Acima de R$ 3.000,01</option></select></div><div><label>NIS da família</label><input id="aNis"></div><div class="full"><label>Observações de saúde</label><textarea id="aSaude" rows="2"></textarea></div><div><label>Situação no curso</label><select id="aStatus"><option>Ativo</option><option>Desistente</option><option>Concluído</option><option>Trancado</option></select></div></div>
+<div class="actions"><button class="btn" id="btnSalvarAluno">Salvar ficha</button><button type="button" class="btn alt hidden" id="btnCancelarEdicao" onclick="cancelarEdicaoAluno()">Cancelar edição</button></div></form></div>
+<div class="panel"><h3>Alunos cadastrados</h3><div class="scroll"><table><thead><tr><th>Aluno</th><th>Turma</th><th>Turno</th><th>Situação</th><th></th></tr></thead><tbody id="tbAlunos"></tbody></table></div></div></section>
+
+<section id="freq" class="page"><div class="title"><h1>Frequência</h1><span class="muted">Presença, falta e justificativa</span></div><div class="panel"><form id="fFreq"><div class="grid"><div><label>Aluno *</label><select id="frAluno" required></select></div><div><label>Data *</label><input id="frData" type="date" required></div><div><label>Situação *</label><select id="frStatus"><option>Presente</option><option>Falta</option></select></div><div id="boxJust" class="hidden"><label>Justificativa da falta *</label><input id="frJust" placeholder="Informe o motivo da falta"></div></div><div class="actions"><button class="btn">Salvar frequência</button></div></form></div><div class="panel"><h3>Histórico</h3><div class="scroll"><table><thead><tr><th>Data</th><th>Aluno</th><th>Situação</th><th>Justificativa</th></tr></thead><tbody id="tbFreq"></tbody></table></div></div></section>
+
+<section id="notas" class="page"><div class="title"><h1>Notas</h1><span class="muted">Notas por bimestre e disciplina</span></div><div class="panel"><form id="fNota"><div class="grid"><div><label>Aluno *</label><select id="ntAluno" required></select></div><div><label>Bimestre *</label><select id="ntBim"><option value="1">1º Bimestre</option><option value="2">2º Bimestre</option><option value="3">3º Bimestre</option><option value="4">4º Bimestre</option></select></div><div><label>Disciplina *</label><select id="ntDisc"><option>Português</option><option>Matemática</option><option>Inglês</option><option>História/Geografia</option></select></div><div><label>Nota *</label><input id="ntValor" type="number" min="0" max="10" step=".1" required></div></div><div class="actions"><button class="btn">Salvar nota</button></div></form></div><div class="panel"><h3>Notas lançadas</h3><div class="scroll"><table><thead><tr><th>Aluno</th><th>Bimestre</th><th>Disciplina</th><th>Nota</th></tr></thead><tbody id="tbNotas"></tbody></table></div></div></section>
+
+<section id="alicerce" class="page"><div class="title"><h1>Rendimento — Sistema Alicerce</h1><span class="muted">Acompanhamento separado das notas escolares</span></div><div class="panel"><form id="fAli"><div class="grid"><div><label>Aluno *</label><select id="alAluno" required></select></div><div><label>Semestre *</label><select id="alBim"><option value="1">1º Semestre</option><option value="2">2º Semestre</option></select></div><div><label>Disciplina *</label><select id="alDisc"><option>Português</option><option>Matemática</option><option>Inglês</option><option>História/Geografia</option></select></div><div><label>Rendimento *</label><input id="alValor" type="number" min="0" max="10" step=".1" required placeholder="0 a 10"></div><div class="full"><label>Observação</label><textarea id="alObs" rows="2"></textarea></div></div><div class="actions"><button class="btn">Salvar rendimento</button></div></form></div><div class="panel"><h3>Registros Alicerce</h3><div class="scroll"><table><thead><tr><th>Aluno</th><th>Semestre</th><th>Disciplina</th><th>Rendimento</th></tr></thead><tbody id="tbAli"></tbody></table></div></div></section>
+
+<section id="acom" class="page"><div class="title"><h1>Acompanhamento individual</h1></div><div class="panel"><form id="fAcom"><div class="grid"><div><label>Aluno *</label><select id="acAluno" required></select></div><div><label>Data *</label><input id="acData" type="date" required></div><div class="full"><label>Registro / encaminhamento *</label><textarea id="acObs" rows="3" required></textarea></div></div><div class="actions"><button class="btn">Salvar acompanhamento</button></div></form></div><div class="panel"><h3>Histórico</h3><div id="listaAcom"></div></div></section>
+
+<section id="nps" class="page"><div class="title"><h1>Pesquisas / NPS</h1><span class="muted">Crie pesquisas diferentes para alunos e responsáveis</span></div>
+<div class="panel"><form id="fNps"><div class="grid"><div class="full"><label>Título da pesquisa *</label><input id="npTitulo" required placeholder="Ex.: Satisfação com as atividades"></div><div><label>Público *</label><select id="npPublico"><option>Aluno</option><option>Responsável</option></select></div><div><label>Aluno relacionado (opcional)</label><select id="npAluno"></select></div><div><label>Nota de recomendação (0 a 10) *</label><input id="npNota" type="number" min="0" max="10" required></div><div class="full"><label>Comentário</label><textarea id="npComentario" rows="2"></textarea></div></div><div class="actions"><button class="btn">Salvar resposta</button></div></form></div>
+<div class="panel"><h3>Resultados por pesquisa</h3><div id="npsResumo" class="muted">Nenhuma pesquisa registrada.</div></div></section>
+
+<section id="rel" class="page"><div class="title"><h1>Relatórios e impressão</h1><span class="muted">PDF, Excel e documentos do aluno</span></div>
+<div class="panel"><h3>Relatórios</h3><div class="actions"><button class="btn" onclick="relatorioPDF()">PDF com gráficos</button><button class="btn" onclick="csv('alunos')">Excel — Alunos</button><button class="btn" onclick="csv('freq')">Excel — Frequência</button><button class="btn" onclick="csv('notas')">Excel — Notas</button><button class="btn" onclick="csv('alicerce')">Excel — Alicerce</button><button class="btn" onclick="csv('nps')">Excel — NPS</button></div></div>
+<div class="panel"><h3>Impressão</h3><div class="grid"><div><label>Aluno</label><select id="rpAluno"></select></div></div><div class="actions"><button class="btn" onclick="imprimirFicha()">Ficha de matrícula</button><button class="btn" onclick="imprimirBoletim()">Boletim de notas</button></div></div>
+<div class="panel"><h3>Gráficos de barras</h3>
+<div class="grid">
+<div><label>Aluno para gráfico de notas</label><select id="grafAluno" onchange="renderGraficos()"></select></div>
+<div><label>Disciplina</label><select id="grafDisc" onchange="renderGraficos()"><option>Português</option><option>Matemática</option><option>Inglês</option><option>História/Geografia</option></select></div>
+</div>
+<h4>Quantitativo — Presente, Ausente e Desistente</h4><div id="grafQuant"></div>
+<h4>Situação da renda familiar</h4><div id="grafRenda"></div>
+<h4>Escola — rendimento das notas por bimestre</h4><div id="grafNotas"></div>
+</div><div class="panel"><h3>Resumo</h3><div id="resumo"></div></div><div class="panel"><div class="actions"><button class="btn alt" onclick="demo()">Carregar dados fictícios</button><button class="btn alt" onclick="limpar()">Limpar dados locais</button></div></div></section>
+</main></div><footer>Agrex EDUCAR • Instituto Agrex • Protótipo para validação de requisitos</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const client=window.supabase.createClient('https://rkintcslcqihxneyczkn.supabase.co','sb_publishable_IrpLhUjQWkCfloLtv7WHFw_0hDN149Q',{auth:{persistSession:true,autoRefreshToken:true}});
+let activeUser=null,loading=false;
+const COLS={nome:"nome",turma:"turma",turno:"turno",nasc:"data_nascimento",natural:"naturalidade",genero:"genero",pai:"nome_pai",mae:"nome_mae",responsavel:"responsavel",telefone:"telefone",profissao:"profissao",trabalho:"local_trabalho",endereco:"endereco",moradores:"pessoas_residencia",moradia:"situacao_moradia",renda:"renda_familiar",nis:"nis_familia",saude:"observacoes_saude",status:"situacao"};
+function alunoRow(a){let r={id:a.id};for(const [k,c] of Object.entries(COLS))r[c]=a[k]===""||a[k]===undefined?null:a[k];return r}
+function alunoObj(r){let a={id:r.id};for(const [k,c] of Object.entries(COLS))a[k]=r[c]??"";a.idade=age(a.nasc);return a}
+function status(t){document.getElementById("syncStatus").textContent=t}
+
+const K=['alunos','freq','notas','alicerce','acom','nps'],db={};K.forEach(k=>db[k]=[]);
+const $=id=>document.getElementById(id), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function save(k){
+ if(!activeUser)return;
+ status('Salvando...');
+ try{
+  if(k==='alunos')throw Error('Use a rotina específica para salvar alunos');
+  const record=db[k][db[k].length-1];
+  const {error}=await client.from(k).insert({aluno_id:record.aluno||null,dados:record});
+  if(error)throw error;
+  await loadAll();status('Dados sincronizados');
+ }catch(e){status('Erro ao salvar');alert('Falha ao salvar no banco: '+e.message);await loadAll()}
+}
+async function loadAll(){
+ if(!activeUser)return;
+ const tables=['alunos','freq','notas','alicerce','acom','nps'];
+ const results=await Promise.all(tables.map(k=>client.from(k).select('*').order(k==='alunos'?'criado_em':'criado_em',{ascending:true}).limit(1000)));
+ for(let i=0;i<tables.length;i++){
+  if(results[i].error)throw Error(tables[i]+': '+results[i].error.message);
+  db[tables[i]]=tables[i]==='alunos'?results[i].data.map(alunoObj):results[i].data.map(r=>({...r.dados,id:r.id}));
+ }
+ render();
+}
+async function initSession(){
+ const {data:{session}}=await client.auth.getSession();
+ if(!session){document.getElementById('authGate').classList.remove('hidden');document.body.classList.add('locked');activeUser=null;return}
+ const {data:profile,error}=await client.from('perfis').select('ativo').eq('id',session.user.id).maybeSingle();
+ if(error||!profile?.ativo){await client.auth.signOut();document.getElementById('authError').textContent='Conta sem perfil ativo. Solicite autorização ao administrador.';return}
+ activeUser=session.user;
+ try{await loadAll();document.getElementById('authGate').classList.add('hidden');document.body.classList.remove('locked');status('Conectado: '+session.user.email)}
+ catch(e){activeUser=null;document.getElementById('authError').textContent='Falha ao carregar: '+e.message}
+}
+document.getElementById('loginForm').onsubmit=async e=>{e.preventDefault();document.getElementById('authError').textContent='Conectando...';const {error}=await client.auth.signInWithPassword({email:loginEmail.value,password:loginPassword.value});if(error){document.getElementById('authError').textContent=error.message;return}document.getElementById('authError').textContent='';await initSession()};
+document.getElementById('logoutBtn').onclick=async()=>{await client.auth.signOut();location.reload()};
+function page(id){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.p===id))}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>page(b.dataset.p));
+function age(v){if(!v)return'';let b=new Date(v+'T00:00:00'),t=new Date(),a=t.getFullYear()-b.getFullYear();if(t.getMonth()<b.getMonth()||(t.getMonth()==b.getMonth()&&t.getDate()<b.getDate()))a--;return a}
+$('aNasc').onchange=()=>$('aIdade').value=age($('aNasc').value);
+function nm(id){return db.alunos.find(x=>x.id===id)?.nome||'Aluno removido'}
+function opts(id,optional=false){let e=$(id),v=e.value;e.innerHTML=(optional?'<option value="">Não vincular</option>':'<option value="">Selecione</option>')+db.alunos.map(a=>`<option value="${a.id}">${esc(a.nome)} — ${esc(a.turno)}</option>`).join('');if([...e.options].some(o=>o.value===v))e.value=v}
+function freqPct(id){let x=db.freq.filter(f=>f.aluno===id);return x.length?Math.round(x.filter(f=>f.status==='Presente').length*100/x.length):null}
+$('frStatus').onchange=()=>{let falta=$('frStatus').value==='Falta';$('boxJust').classList.toggle('hidden',!falta);$('frJust').required=falta;if(!falta)$('frJust').value=''};
+let alunoEmEdicao=null;
+$('fAluno').onsubmit=async e=>{e.preventDefault();if(!activeUser)return;let registro={id:alunoEmEdicao||crypto.randomUUID(),nome:aNome.value.trim(),turma:aTurma.value.trim(),turno:aTurno.value,nasc:aNasc.value,idade:age(aNasc.value),natural:aNatural.value.trim(),genero:aGenero.value,pai:aPai.value.trim(),mae:aMae.value.trim(),responsavel:aResp.value.trim(),telefone:aTel.value.trim(),profissao:aProf.value.trim(),trabalho:aTrab.value.trim(),endereco:aEnd.value.trim(),moradores:aMoradores.value,moradia:aMoradia.value,renda:aRenda.value,nis:aNis.value.trim(),saude:aSaude.value.trim(),status:aStatus.value};
+ const row=alunoRow(registro);const isEdit=!!alunoEmEdicao;
+ status('Salvando aluno...');
+ const q=isEdit?client.from('alunos').update(row).eq('id',registro.id):client.from('alunos').insert(row);
+ const {error}=await q;
+ if(error){status('Erro ao salvar');alert('Não foi possível salvar: '+error.message);return}
+ cancelarEdicaoAluno();await loadAll();status('Aluno salvo no banco compartilhado');
+};
+$('fFreq').onsubmit=e=>{e.preventDefault();db.freq.push({aluno:frAluno.value,data:frData.value,status:frStatus.value,justificativa:frStatus.value==='Falta'?frJust.value.trim():''});e.target.reset();frData.value=new Date().toISOString().slice(0,10);$('frStatus').dispatchEvent(new Event('change'));save('freq')};
+$('fNota').onsubmit=e=>{e.preventDefault();db.notas.push({aluno:ntAluno.value,bimestre:ntBim.value,disciplina:ntDisc.value,nota:Number(ntValor.value)});e.target.reset();save('notas')};
+$('fAli').onsubmit=e=>{e.preventDefault();db.alicerce.push({aluno:alAluno.value,bimestre:alBim.value,disciplina:alDisc.value,rendimento:Number(alValor.value),observacao:alObs.value.trim()});e.target.reset();save('alicerce')};
+$('fAcom').onsubmit=e=>{e.preventDefault();db.acom.push({aluno:acAluno.value,data:acData.value,obs:acObs.value.trim()});e.target.reset();acData.value=new Date().toISOString().slice(0,10);save('acom')};
+$('fNps').onsubmit=e=>{e.preventDefault();db.nps.push({titulo:npTitulo.value.trim(),publico:npPublico.value,aluno:npAluno.value,nota:Number(npNota.value),comentario:npComentario.value.trim()});e.target.reset();save('nps')};
+function ficha(id){let a=db.alunos.find(x=>x.id===id);if(!a)return;alert(`FICHA DO ALUNO\n\nNome: ${a.nome}\nTurma: ${a.turma}\nTurno: ${a.turno}\nNascimento: ${a.nasc||'—'}\nIdade: ${a.idade||'—'}\nNaturalidade: ${a.natural||'—'}\nGênero: ${a.genero||'—'}\nPai: ${a.pai||'—'}\nMãe: ${a.mae||'—'}\nResponsável: ${a.responsavel||'—'}\nTelefone: ${a.telefone||'—'}\nProfissão: ${a.profissao||'—'}\nLocal de trabalho: ${a.trabalho||'—'}\nEndereço: ${a.endereco||'—'}\nPessoas na residência: ${a.moradores||'—'}\nMoradia: ${a.moradia||'—'}\nRenda: ${a.renda||'—'}\nNIS: ${a.nis||'—'}\nSaúde: ${a.saude||'—'}\nSituação: ${a.status}`)}
+function editarAluno(id){
+ const a=db.alunos.find(x=>x.id===id);if(!a)return;
+ const campos={aNome:'nome',aTurma:'turma',aTurno:'turno',aNasc:'nasc',aNatural:'natural',aGenero:'genero',aPai:'pai',aMae:'mae',aResp:'responsavel',aTel:'telefone',aProf:'profissao',aTrab:'trabalho',aEnd:'endereco',aMoradores:'moradores',aMoradia:'moradia',aRenda:'renda',aNis:'nis',aSaude:'saude',aStatus:'status'};
+ Object.entries(campos).forEach(([id,chave])=>$(id).value=a[chave]??'');
+ $('aIdade').value=age(a.nasc);alunoEmEdicao=id;
+ $('btnSalvarAluno').textContent='Salvar alterações';$('btnCancelarEdicao').classList.remove('hidden');
+ $('fAluno').scrollIntoView({behavior:'smooth',block:'start'});$('aNome').focus();
+}
+function cancelarEdicaoAluno(){alunoEmEdicao=null;$('fAluno').reset();$('aIdade').value='';$('btnSalvarAluno').textContent='Salvar ficha';$('btnCancelarEdicao').classList.add('hidden')}
+async function removeAluno(id){if(!confirm('Remover aluno? Esta ação é permanente.'))return;const {error}=await client.from('alunos').delete().eq('id',id);if(error){alert('Não foi possível remover: '+error.message);return}await loadAll()}
+function barras(el,dados,max){
+ let e=$(el);if(!e)return;
+ let maior=max||Math.max(1,...dados.map(x=>Number(x[1])||0));
+ e.innerHTML=dados.map(x=>{let v=Number(x[1])||0,p=Math.max(0,Math.min(100,v*100/maior));return `<div class="barrow"><span>${esc(x[0])}</span><div class="track"><div class="fill" style="width:${p}%"></div></div><b>${x[2]??v}</b></div>`}).join('')||'<span class="muted">Sem dados.</span>';
+}
+function renderGraficos(){
+ if(!$('grafQuant'))return;
+ let hoje=new Date().toISOString().slice(0,10),ativos=db.alunos.filter(a=>a.status!=='Desistente'),des=db.alunos.filter(a=>a.status==='Desistente').length;
+ let regs=db.freq.filter(f=>f.data===hoje),presentes=regs.filter(f=>f.status==='Presente').length,ausentes=regs.filter(f=>f.status==='Falta').length;
+ if(!regs.length){presentes=ativos.filter(a=>db.freq.some(f=>f.aluno===a.id&&f.status==='Presente')).length;ausentes=ativos.filter(a=>db.freq.some(f=>f.aluno===a.id&&f.status==='Falta')).length}
+ barras('grafQuant',[['Presentes',presentes],['Ausentes',ausentes],['Desistentes',des]]);
+ let faixas=['Até R$ 1.000,00','R$ 1.000,01 - R$ 2.000,00','R$ 2.000,01 - R$ 3.000,00','Acima de R$ 3.000,01'];
+ barras('grafRenda',faixas.map(f=>[f,db.alunos.filter(a=>a.renda===f).length]));
+ let id=$('grafAluno').value,disc=$('grafDisc').value;
+ let notas=[1,2,3,4].map(b=>{let n=db.notas.find(x=>x.aluno===id&&x.disciplina===disc&&String(x.bimestre)===String(b));return [`${b}º Bimestre`,n?Number(n.nota):0,n?Number(n.nota).toFixed(1):'—']});
+ barras('grafNotas',notas,10);
+}
+function render(){
+['frAluno','ntAluno','alAluno','acAluno','rpAluno','grafAluno'].forEach(x=>opts(x));opts('npAluno',true);
+$('tbAlunos').innerHTML=db.alunos.map(a=>`<tr><td>${esc(a.nome)}</td><td>${esc(a.turma)}</td><td>${esc(a.turno)}</td><td><span class="tag">${esc(a.status)}</span></td><td><button class="btn alt sm" onclick="ficha('${a.id}')">Ver ficha</button> <button class="btn alt sm" onclick="editarAluno('${a.id}')">Editar ficha</button> <button class="btn alt sm" onclick="removeAluno('${a.id}')">Remover</button></td></tr>`).join('')||'<tr><td colspan="5" class="muted">Nenhum aluno.</td></tr>';
+$('tbFreq').innerHTML=[...db.freq].reverse().map(f=>`<tr><td>${esc(f.data)}</td><td>${esc(nm(f.aluno))}</td><td><span class="tag ${f.status==='Falta'?'warn':''}">${f.status}</span></td><td>${esc(f.justificativa||'—')}</td></tr>`).join('')||'<tr><td colspan="4" class="muted">Sem registros.</td></tr>';
+$('tbNotas').innerHTML=[...db.notas].reverse().map(n=>`<tr><td>${esc(nm(n.aluno))}</td><td>${n.bimestre}º</td><td>${esc(n.disciplina)}</td><td>${Number(n.nota).toFixed(1)}</td></tr>`).join('')||'<tr><td colspan="4" class="muted">Sem notas.</td></tr>';
+$('tbAli').innerHTML=[...db.alicerce].reverse().map(n=>`<tr><td>${esc(nm(n.aluno))}</td><td>${n.bimestre}º Semestre</td><td>${esc(n.disciplina)}</td><td>${Number(n.rendimento).toFixed(1)}</td></tr>`).join('')||'<tr><td colspan="4" class="muted">Sem registros.</td></tr>';
+$('listaAcom').innerHTML=[...db.acom].reverse().map(a=>`<div class="entry"><b>${esc(nm(a.aluno))}</b> · ${esc(a.data)}<div class="muted">${esc(a.obs)}</div></div>`).join('')||'<span class="muted">Nenhum acompanhamento.</span>';
+let groups={};db.nps.forEach(n=>(groups[n.titulo]??=[]).push(n));$('npsResumo').innerHTML=Object.entries(groups).map(([t,rs])=>{
+ let pr=rs.filter(x=>x.nota>=9).length,de=rs.filter(x=>x.nota<=6).length,score=Math.round((pr-de)*100/rs.length);
+ let dist=Array.from({length:11},(_,nota)=>({nota,qtd:rs.filter(x=>Number(x.nota)===nota).length}));
+ let maior=Math.max(1,...dist.map(x=>x.qtd));
+ let W=660,H=230,base=185,left=42,chartW=600,chartH=145,bw=36,gap=(chartW-11*bw)/10;
+ let grid=[0,.25,.5,.75,1].map(f=>{let y=base-chartH*f;let val=Math.round(maior*f);return `<line x1="${left}" y1="${y}" x2="${left+chartW}" y2="${y}" stroke="#dfe7e3" stroke-width="1"/><text x="${left-8}" y="${y+4}" text-anchor="end" font-size="10" fill="#68746f">${val}</text>`}).join('');
+ let bars=dist.map((d,i)=>{let x=left+i*(bw+gap),bh=d.qtd?Math.max(4,d.qtd/maior*chartH):0,y=base-bh;return `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="4" fill="#3b8766"/><text x="${x+bw/2}" y="${base+18}" text-anchor="middle" font-size="11" fill="#46534e">${d.nota}</text>${d.qtd?`<text x="${x+bw/2}" y="${Math.max(13,y-6)}" text-anchor="middle" font-size="11" font-weight="700" fill="#244f3e">${d.qtd}</text>`:''}`}).join('');
+ let svg=`<div style="overflow-x:auto;margin-top:10px"><svg viewBox="0 0 ${W} ${H}" style="width:100%;min-width:560px;max-width:760px;height:auto" xmlns="http://www.w3.org/2000/svg">${grid}${bars}<text x="${left+chartW/2}" y="225" text-anchor="middle" font-size="11" fill="#68746f">Nota atribuída (0 a 10)</text></svg></div>`;
+ return `<div class="entry" style="padding:18px;margin-bottom:16px"><div style="display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap"><div><b style="font-size:17px">${esc(t)}</b><div class="muted" style="margin-top:5px"><b>${rs.length}</b> resposta(s) · Alunos: ${rs.filter(x=>x.publico==='Aluno').length} · Responsáveis: ${rs.filter(x=>x.publico==='Responsável').length}</div></div><div style="text-align:right"><span class="muted">NPS</span><div class="metric">${score>0?'+':''}${score}</div></div></div><h4 style="margin:18px 0 0">Distribuição das respostas</h4>${svg}</div>`;
+}).join('')||'Nenhuma pesquisa registrada.';
+let fp=db.alunos.map(a=>freqPct(a.id)).filter(x=>x!==null),ns=db.notas.map(n=>Number(n.nota));$('mAlunos').textContent=db.alunos.length;$('mFreq').textContent=fp.length?Math.round(fp.reduce((a,b)=>a+b,0)/fp.length)+'%':'—';$('mNota').textContent=ns.length?(ns.reduce((a,b)=>a+b,0)/ns.length).toFixed(1):'—';$('mNps').textContent=Object.keys(groups).length;
+$('chart').innerHTML=db.alunos.length?db.alunos.map(a=>{let v=freqPct(a.id);return `<div class="barrow"><span>${esc(a.nome)}</span><div class="track"><div class="fill" style="width:${v??0}%"></div></div><b>${v===null?'—':v+'%'}</b></div>`}).join(''):'Cadastre alunos e frequências.';
+renderGraficos();
+$('resumo').innerHTML=`<div class="entry">Alunos <b>${db.alunos.length}</b></div><div class="entry">Frequências <b>${db.freq.length}</b></div><div class="entry">Notas <b>${db.notas.length}</b></div><div class="entry">Registros Alicerce <b>${db.alicerce.length}</b></div><div class="entry">Acompanhamentos <b>${db.acom.length}</b></div><div class="entry">Respostas NPS <b>${db.nps.length}</b></div>`;
+}
+function printDoc(t,b){let w=window.open('','_blank');if(!w)return alert('Permita pop-ups para imprimir.');w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>'+t+'</title><style>body{font-family:Arial;margin:30px;color:#222}h1{color:#19513e;margin:0}h2{color:#555}.head{border-bottom:2px solid #19513e;margin-bottom:20px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 25px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccc;padding:8px;font-size:12px}.bar{height:18px;border:1px solid #777;position:relative;background:white}.fill{height:100%;background:#438a69;-webkit-print-color-adjust:exact;print-color-adjust:exact}@media print{body{margin:10mm}}</style><style>#authGate{position:fixed;inset:0;background:#eef5f0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:18px}#authGate .panel{max-width:430px;width:100%;box-shadow:0 10px 45px #123d3022}#authGate h2{color:#19513e}#authGate input{margin-bottom:12px}#authError{color:#a12d2d;white-space:pre-wrap}#syncStatus{font-size:12px;color:#d9eee4}body.locked .shell,body.locked footer{visibility:hidden}</style></head><body class="locked"><div id="authGate"><div class="panel"><h2>AGREX EDUCAR</h2><p>Instituto Agrex — Ambiente de homologação</p><p class="muted">Acesso individual autorizado. Use apenas dados fictícios.</p><form id="loginForm"><label>E-mail</label><input type="email" id="loginEmail" required autocomplete="username"><label>Senha</label><input type="password" id="loginPassword" required autocomplete="current-password"><button class="btn" type="submit">Entrar</button></form><p id="authError"></p></div></div><div class="head"><h1>AGREX EDUCAR</h1><h2>INSTITUTO AGREX</h2></div>'+b+'<script>setTimeout(()=>window.print(),300)<\/script></body></html>');w.document.close()}
+function imprimirFicha(){let a=db.alunos.find(x=>x.id===rpAluno.value);if(!a)return alert('Selecione um aluno.');let r=[['Nome',a.nome],['Turma',a.turma],['Turno',a.turno],['Nascimento',a.nasc],['Idade',a.idade],['Naturalidade',a.natural],['Gênero',a.genero],['Pai',a.pai],['Mãe',a.mae],['Responsável',a.responsavel],['Telefone',a.telefone],['Profissão',a.profissao],['Local de trabalho',a.trabalho],['Endereço',a.endereco],['Pessoas na residência',a.moradores],['Moradia',a.moradia],['Renda',a.renda],['NIS',a.nis],['Observações de saúde',a.saude],['Situação',a.status]];printDoc('Ficha de matrícula', '<h2>Ficha de matrícula</h2><div class="grid">'+r.map(x=>'<div><b>'+x[0]+':</b><br>'+esc(x[1]||'—')+'</div>').join('')+'</div>')}
+function imprimirBoletim(){let id=rpAluno.value,a=db.alunos.find(x=>x.id===id);if(!a)return alert('Selecione um aluno.');let ds=['Português','Matemática','Inglês','História/Geografia'];let rows=ds.map(d=>'<tr><td>'+d+'</td>'+[1,2,3,4].map(b=>{let n=db.notas.find(x=>x.aluno===id&&x.disciplina===d&&String(x.bimestre)===String(b));return '<td>'+(n?Number(n.nota).toFixed(1):'—')+'</td>'}).join('')+'</tr>').join('');printDoc('Boletim de notas','<h2>Boletim de notas</h2><p><b>Aluno:</b> '+esc(a.nome)+' &nbsp; <b>Turma:</b> '+esc(a.turma)+' &nbsp; <b>Turno:</b> '+esc(a.turno)+'</p><table><tr><th>Disciplina</th><th>1º Bim.</th><th>2º Bim.</th><th>3º Bim.</th><th>4º Bim.</th></tr>'+rows+'</table><p>Sem cálculo automático de média nesta versão.</p>')}
+function relatorioPDF(){
+ let hoje=new Date().toISOString().slice(0,10),des=db.alunos.filter(a=>a.status==='Desistente').length,regs=db.freq.filter(f=>f.data===hoje);
+ let pre=regs.filter(f=>f.status==='Presente').length,aus=regs.filter(f=>f.status==='Falta').length;
+ if(!regs.length){pre=db.alunos.filter(a=>a.status!=='Desistente'&&db.freq.some(f=>f.aluno===a.id&&f.status==='Presente')).length;aus=db.alunos.filter(a=>a.status!=='Desistente'&&db.freq.some(f=>f.aluno===a.id&&f.status==='Falta')).length}
+ let mk=(arr,max)=>{let teto=max||Math.max(1,...arr.map(y=>Number(y[1])||0));return arr.map(x=>{let v=Number(x[1])||0,p=Math.max(0,Math.min(100,v*100/teto)),w=Math.round(p*4.2);return '<div style="display:grid;grid-template-columns:180px 430px 45px;gap:10px;align-items:center;margin:10px 0;page-break-inside:avoid"><span>'+esc(x[0])+'</span><svg width="430" height="24" viewBox="0 0 430 24" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="2" width="420" height="20" rx="3" fill="white" stroke="#777"/><rect x="1" y="2" width="'+w+'" height="20" rx="3" fill="#2f7658"/></svg><b>'+x[1]+'</b></div>'}).join('')}
+ let q=mk([['Presentes',pre],['Ausentes',aus],['Desistentes',des]]);
+ let faixas=['Até R$ 1.000,00','R$ 1.000,01 - R$ 2.000,00','R$ 2.000,01 - R$ 3.000,00','Acima de R$ 3.000,01'];
+ let r=mk(faixas.map(f=>[f,db.alunos.filter(a=>a.renda===f).length]));
+ let id=$('grafAluno')?.value,disc=$('grafDisc')?.value||'Português',al=db.alunos.find(a=>a.id===id);
+ let nd=[1,2,3,4].map(b=>{let n=db.notas.find(x=>x.aluno===id&&x.disciplina===disc&&String(x.bimestre)===String(b));return [b+'º Bimestre',n?Number(n.nota):0]});
+ let n=mk(nd,10);
+ printDoc('Relatório com gráficos','<h2>Relatório com gráficos</h2><p style="color:#666">Indicadores do Instituto Agrex</p><h3>Quantitativo de alunos</h3>'+q+'<h3>Situação da renda familiar</h3>'+r+'<h3>Rendimento escolar — '+esc(al?.nome||'Aluno não selecionado')+' / '+esc(disc)+'</h3>'+n)
+}
+function csv(k){let rows=db[k];if(!rows.length)return alert('Não há dados para exportar.');let h=Object.keys(rows[0]),out=[h.join(';'),...rows.map(r=>h.map(x=>'"'+String(r[x]??'').replace(/"/g,'""')+'"').join(';'))].join('\r\n'),b=new Blob(['\ufeff'+out],{type:'text/csv;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='agrex_'+k+'.csv';a.click();URL.revokeObjectURL(u)}
+function demo(){alert('Nesta versão, cadastre exemplos fictícios pelas telas. O preenchimento automático foi desativado para proteger o banco compartilhado.')}
+function limpar(){alert('A limpeza em massa foi desativada no banco compartilhado. Exclua somente registros autorizados.')}
+frData.value=new Date().toISOString().slice(0,10);acData.value=frData.value;render();initSession();
+</script></body></html>
